@@ -32,7 +32,7 @@ function borrarTweet(e) {
   e.preventDefault();
   if (e.target.className === "borrar-tweet") {
     e.target.parentElement.remove();
-    alert("Tweet eliminado");
+    borrarTweetLocalStorage(e.target.parentElement.innerText);
   }
 }
 
@@ -65,4 +65,18 @@ function localStorageListo() {
     li.appendChild(botonBorrar);
     listaTweets.appendChild(li);
   });
+}
+function borrarTweetLocalStorage(tweet) {
+  let tweets;
+  let tweetABorrar;
+  // eliminamos la 'x' de la cadena tweet
+  tweetABorrar = tweet.substring(0, tweet.length - 1);
+
+  tweets = obtenerTweetsLocalStorage();
+  tweets.forEach(function(tweet, index) {
+    if (tweet === tweetABorrar) {
+      tweets.splice(index, 1);
+    }
+  });
+  localStorage.setItem("tweets", JSON.stringify(tweets));
 }
